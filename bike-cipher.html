@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="enc.css">
+    <title>Bike Cipher</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background: linear-gradient(135deg, #8e44ad, #3498db);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            z-index: 100;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            font-weight: 600;
+            margin: 0;
+            letter-spacing: 3px;
+            text-shadow: 3px 3px 12px rgba(0, 0, 0, 0.4);
+            transition: font-size 0.5s ease;
+        }
+
+        .dark-mode-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 14px;
+            border-radius: 50%;
+            font-size: 2.5em;
+            color: white;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .dark-mode-toggle:hover {
+            transform: scale(1.2);
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .container {
+            backdrop-filter: blur(25px);
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 40px;
+            width: 90%;
+            max-width: 700px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            animation: fadeIn 1.2s ease;
+            transition: all 0.3s ease;
+        }
+
+        label {
+            display: block;
+            margin: 20px 0 10px;
+            font-weight: bold;
+            font-size: 1.3em;
+            color: #f9f9f9;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 18px;
+            margin-bottom: 18px;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.1em;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        textarea {
+            resize: none;
+            height: 120px;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            box-shadow: 0 10px 20px rgba(255, 255, 255, 0.4);
+        }
+
+        button {
+            padding: 16px 45px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 30px;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            color: white;
+            cursor: pointer;
+            margin: 15px;
+            font-weight: bold;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s, box-shadow 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        h2 {
+            font-size: 1.6em;
+            color: #fff;
+            margin-top: 25px;
+            text-shadow: 3px 3px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .dark-mode {
+            background: linear-gradient(135deg, #1f1f1f, #2c3e50);
+            color: #ddd;
+        }
+
+        .dark-mode .container {
+            background: rgba(50, 50, 50, 0.6);
+        }
+
+        .dark-mode label {
+            color: #bbb;
+        }
+
+        .dark-mode input, .dark-mode textarea, .dark-mode select {
+            background: rgba(50, 50, 50, 0.6);
+            color: #e0e0e0;
+        }
+
+        .dark-mode button {
+            background: linear-gradient(135deg, #444, #666);
+        }
+
+        .dark-mode-toggle {
+            color: yellow;
+        }
+
+        .about-section {
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            color: white;
+            font-size: 1.1em;
+            line-height: 1.6;
+            transition: background 0.3s ease;
+        }
+
+        .about-section h2 {
+            margin-bottom: 15px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5em;
+            }
+
+            button {
+                padding: 14px 30px;
+                font-size: 1.1em;
+            }
+
+            input, textarea, select {
+                font-size: 1.1em;
+            }
+
+            .dark-mode-toggle {
+                font-size: 2.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>Bike Cipher</h1>
+        <button class="dark-mode-toggle" id="toggleDarkMode" onclick="toggleDarkMode()">🌙</button>
+    </header>
+
+    <div class="container">
+        <label for="shift">Shift:</label>
+        <input type="number" id="shift" value="1" min="1" max="3">
+        
+        <label for="message">Message:</label>
+        <textarea id="message" rows="4" cols="50"></textarea>
+        
+        <button onclick="encryptMessage()">Encrypt</button>
+        <button onclick="decryptMessage()">Decrypt</button>
+        
+        <h2>Result:</h2>
+        <textarea id="result" rows="4" cols="50" readonly></textarea>
+    </div>
+
+    <div class="about-section">
+        <h2>About Bike Cipher</h2>
+        <p>The Bike Cipher is a fun and interactive tool that connects your messages to the fascinating world of bicycles. 
+        Using this cipher, each letter of your message is encoded into a specific bike part, such as handlebars, tires, or chains. 
+        Whether you're a bike enthusiast or just love creative ciphers, this tool offers a unique way to explore the language of cycling while sending secret messages.</p>
+    </div>
+
+    <script>
+        let shift = 0;
+
+        function createMapping(shiftValue) {
+            const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const bikeParts = [
+                'Drop Bar', 'Mountain Bike', 'Fixie', 'Helmet', 'Tires',
+                'Pedals', 'Chain', 'Handlebar', 'Frame', 'Brakes', 'Gears', 
+                'Saddle', 'Lights', 'Reflectors', 'Bell', 'Pump', 'Rims',
+                'Kickstand', 'Bearings', 'Crank', 'Fender', 'Tubes', 'Gloves',
+                'Cleats', 'Bike Rack', 'Water Bottle'
+            ];
+
+            const shiftedMapping = {};
+            for (let i = 0; i < alphabet.length; i++) {
+                const shiftedIndex = (i + shiftValue) % alphabet.length;
+                shiftedMapping[alphabet[i]] = bikeParts[shiftedIndex];
+            }
+            return shiftedMapping;
+        }
+
+        function updateMapping() {
+            shift = parseInt(document.getElementById('shift').value, 10) || 0;
+            return createMapping(shift);
+        }
+
+        function validateMessage(input) {
+            const letterRegex = /^[A-Za-z\s]+$/;
+            if (!letterRegex.test(input)) {
+                // Show Rickroll popup
+                alert("Oops! Only letters are allowed. Never gonna give you up!");
+                return false;
+            }
+            return true;
+        }
+
+        function encryptMessage() {
+            const message = document.getElementById('message').value.toUpperCase();
+            if (!validateMessage(message)) return;
+
+            const map = updateMapping();
+            const result = [...message].map(char => map[char] || char).join(' ');
+            document.getElementById('result').value = result;
+        }
+
+        function decryptMessage() {
+            const message = document.getElementById('message').value.trim();
+            if (!message) {
+                alert("Please enter a message to decrypt.");
+                return;
+            }
+
+            const map = updateMapping();
+            const reverseMap = Object.fromEntries(Object.entries(map).map(([key, value]) => [value.toUpperCase(), key]));
+            const parts = message.split(/\s*,\s*|\s+/); // Split by commas, spaces, or both
+            const result = parts.map(part => reverseMap[part.toUpperCase()] || part).join('');
+            document.getElementById('result').value = result;
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>
